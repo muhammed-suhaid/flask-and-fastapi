@@ -12,7 +12,7 @@ def get_weather():
 
 #----- Add Weather Data -----#
 @app.post('/weather')
-def add_weather(data:dict):   
+def add_weather(data:dict):
     global current_id
     data['id']=current_id
     current_id+=1
