@@ -1,0 +1,47 @@
+[
+    {
+        "location": {
+            "lat": 9.93,
+            "lon": 76.26
+        },
+        "temperature": 30.0,
+        "otherInfo": "Rainy",
+        "id": 1
+    },
+    {
+        "location": {
+            "lat": 11.25,
+            "lon": 75.78
+        },
+        "temperature": 32.5,
+        "otherInfo": "Sunny",
+        "id": 2
+    },
+    {
+        "location": {
+            "lat": 8.52,
+            "lon": 76.94
+        },
+        "temperature": 28.0,
+        "otherInfo": "Cloudy",
+        "id": 3
+    },
+    {
+        "location": {
+            "lat": 10.85,
+            "lon": 76.27
+        },
+        "temperature": 29.2,
+        "otherInfo": "Humid",
+        "id": 4
+    },
+    {
+        "location": {
+            "lat": 9.5,
+            "lon": 76.32
+        },
+        "temperature": 27.8,
+        "otherInfo": "Heavy rain",
+        "id": 5
+    }
+]

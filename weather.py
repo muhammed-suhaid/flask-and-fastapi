@@ -1,39 +1,61 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
+from services.weather_service import WeatherService
+from models.weather_model import WeatherCreateModel,WeatherUpdateModel
 
 app = FastAPI()
-
-weather_data=[]
-current_id=1
+weather_service=WeatherService()
 
 #----- Get Weather Data -----#
 @app.get('/weather')
 def get_weather():
-    return weather_data
+    result=weather_service.get_weather()
+    
+    return {
+        "success":True,
+        "message":"Data fetched successfully!",
+        "data":result
+    }
+        
 
 #----- Add Weather Data -----#
 @app.post('/weather')
-def add_weather(data:dict):
-    global current_id
-    data['id']=current_id
-    current_id+=1
-   
-    weather_data.append(data)
-    return {"message":"Data added"}
-
+def add_weather(data:WeatherCreateModel):
+    result=weather_service.add_weather(data.model_dump())
+    
+    if not result:
+        return {
+            "success":False,
+            "message":"Data not added!"
+        }
+    return {
+        "success":True,
+        "message":"Data added successfully!",
+        "data":result
+    }
+    
+        
 #----- Update Weather Data -----#
 @app.put('/weather/{id}')
-def update_weather(id:int,data:dict):
-    for item in weather_data:
-        if item['id']==id:
-            item.update(data)
-            return {"message":"Data updated"}
-    return {"message":"Data not found"}
+def update_weather(id:int,data:WeatherUpdateModel):
+    result = weather_service.update_weather(id,data.model_dump(exclude_unset=True))
+    
+    if not result:
+        raise HTTPException(status_code=404, detail="Data not found!") 
+    return {
+        "success":True,
+        "message":"Data updated successfully!",
+        "data":result
+    }    
 
 #----- Delete Weather Data -----#
 @app.delete('/weather/{id}')
 def delete_weather(id:int): 
-    for item in weather_data:
-        if item['id']==id:
-            weather_data.remove(item)
-            return {"message":"Data deleted"}
-    return {"message":"Data not found"}
+    result=weather_service.delete_weather(id)
+    
+    if not result:
+        raise HTTPException(status_code=404, detail="Data not found!")
+    return {
+        "success":True,
+        "message":"Data deleted successfully!",
+        "data":result
+    }
